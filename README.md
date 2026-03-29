@@ -131,6 +131,31 @@ You can also trigger a manual update at any time by saying `close the session` �
 
 ---
 
+## Session prompts
+
+The session hook and checkpoint hook handle context automatically in Claude Code. But when you're resuming work, switching environments, or need to pull in deeper context mid-session, these are the prompts to reach for.
+
+**Resuming a project:**
+```
+Check the vault for [project] context and resume from where we left off.
+```
+
+**Loading deeper context when needed:**
+```
+Pull the full CONTEXT.md and DECISIONS.md for [project] — I need you to understand the full picture before we proceed.
+```
+
+**Closing a session:**
+```
+Close the session — update STATUS.md and DECISIONS.md with everything from today.
+```
+
+Any natural phrasing works. The key is referencing the vault explicitly so Claude knows to read the files rather than rely on what's already in context.
+
+**Claude Desktop users:** the hook doesn't fire in Desktop sessions, so the resume prompt is load-bearing, not optional. Start every Desktop session with it. The MCPVault MCP server must also be configured in your Desktop MCP config pointing at the same vault directory — see [Claude Desktop bridge](#claude-desktop-bridge).
+
+---
+
 ## Why MCPVault and not a CLI tool
 
 Some Claude Code workflows prefer CLI tools over MCP servers for simplicity. MCPVault is the right choice here for two reasons:
