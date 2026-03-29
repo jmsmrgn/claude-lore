@@ -1,6 +1,6 @@
 # claude-lore
 
-Persistent project memory for Claude Code. Context survives session boundaries. No database, no background service, no infrastructure.
+Persistent project memory that follows Claude across sessions. No database, no background service, no infrastructure.
 
 ---
 
