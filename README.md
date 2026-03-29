@@ -68,7 +68,7 @@ The setup script will:
 - Copy the vault template
 - Inject the session hook into `~/.claude/settings.json`
 
-> **Note:** Keep the cloned repo in place after running setup. The hook points to `hooks/inject-context.sh` inside it — moving or deleting the repo breaks the hook.
+> **Note:** Keep the cloned repo in place after running setup. The hook points to `hooks/inject-context.sh` inside it — moving or deleting the repo breaks the hook. The repo contains only installable source files. Your vault (where project context lives) is a separate directory created during setup.
 
 After setup:
 
