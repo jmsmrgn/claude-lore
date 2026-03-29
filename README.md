@@ -109,25 +109,27 @@ A common mistake is putting stack conventions (package manager, git rules, infra
 
 ## Adding a new project
 
+The easiest way — just tell Claude directly, in either Claude Code or Desktop:
+
+```
+New project: [name]. Update the vault with CONTEXT.md and STATUS.md and let's begin work.
+```
+
+Claude will create the files, ask what it needs to know, and start the session. No command line required.
+
+If you prefer to set up the files yourself first, the script creates the folder structure:
+
 ```bash
 ./scripts/new-project.sh my-project
 ```
 
-Creates the project folder with stub files ready to fill in. Pass an optional repo path to also generate a project-scoped `CLAUDE.md`:
+Pass an optional repo path to also generate a project-scoped `CLAUDE.md`:
 
 ```bash
 ./scripts/new-project.sh my-project ~/git/my-project
 ```
 
-Fill in `STATUS.md` first — it's what loads every session. `CONTEXT.md` and `DECISIONS.md` can wait until there's something worth locking down. See [Vault structure](#vault-structure) for what belongs in each file.
-
-Once the stub is ready, use this prompt to kick off the first session — works in both Claude Code and Claude Desktop:
-
-```
-I just created a new project called [project]. Read the vault stub and help me document what we're building.
-```
-
-Claude will read the files and guide you through filling in the context that matters. In Claude Desktop, this prompt is the entry point since no hook fires automatically.
+Either way, `STATUS.md` is the highest priority to fill in — it loads every session. `CONTEXT.md` and `DECISIONS.md` can wait until there's something worth locking down. See [Vault structure](#vault-structure) for what belongs in each file.
 
 ---
 
