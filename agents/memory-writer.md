@@ -22,7 +22,7 @@ Always read the current file before patching. Use patch_note for surgical update
 Replace the "Last session" and "Next steps" sections entirely with new content. Keep "Current state" and "Key locations" unless instructed otherwise. Update the frontmatter `updated` field.
 
 ### DECISIONS.md
-Append new rows to the decisions table. Never remove existing rows. Only add decisions that are genuinely locked — architectural choices, naming decisions, rejected approaches. Do not add tactical choices or things likely to be revisited.
+Append new rows to the decisions table. Never remove existing rows. Only add decisions that are genuinely locked — architectural choices, naming decisions, rejected approaches. Do not add tactical choices or things likely to be revisited. Each new row must begin with the date: `| **YYYY-MM-DD** Decision text | Rationale |`
 
 ### CONTEXT.md
 Patch only the sections that changed. Stack, repo structure, or constraint changes. Do not rewrite the whole file unless the project fundamentally changed.
@@ -40,6 +40,7 @@ Read the relevant files, make the minimal necessary patches, update frontmatter 
 
 ## Rules
 
+- Prefix every new entry appended to STATUS.md or DECISIONS.md with the current date in YYYY-MM-DD format. Format: `**YYYY-MM-DD** — [content]`. This applies to new rows added to the DECISIONS.md table and to new entries appended anywhere in STATUS.md. Do not retroactively timestamp existing entries.
 - Never invent decisions that weren't explicitly stated
 - Never delete existing locked decisions
 - Keep STATUS.md under 40 lines
