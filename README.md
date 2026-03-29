@@ -6,7 +6,7 @@ Persistent project memory for Claude Code. Context survives session boundaries. 
 
 ## The problem
 
-Claude Code's native memory continues to improve. Auto Memory takes notes during sessions. Auto Dream consolidates them between sessions, pruning contradictions, keeping things current.
+Claude's native memory continues to improve — in Claude Code, Auto Memory takes notes during sessions, and Auto Dream consolidates them between sessions, pruning contradictions, keeping things current.
 
 That covers what Claude _observed_. It doesn't cover what you need Claude to _know from the start_ — context you authored deliberately, that you can read and correct, that exists before the first session begins.
 
