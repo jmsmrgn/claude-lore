@@ -14,7 +14,7 @@ That covers what Claude _observed_. It doesn't cover what you need Claude to _kn
 
 > **Claude Desktop users:** Auto Memory and Auto Dream are Claude Code-only features. Desktop sessions have no equivalent native memory — `claude-lore` fills that gap directly, not just as a complement to native memory but as a primary persistence layer.
 
-The decisions you made before Claude was in the room. The constraints that aren't obvious from the code. The approaches you already tried and rejected. The current state of something half-finished. That context doesn't emerge from observation — it has to be written intentionally.
+The constraints that aren't obvious from the code. The approaches you already tried and rejected. The current state of something half-finished. That context doesn't emerge from observation — it has to be written intentionally.
 
 `claude-lore` is where you put that.
 
