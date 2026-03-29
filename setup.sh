@@ -104,7 +104,38 @@ if [ ! -d "$VAULT_DIR/Projects" ]; then
 fi
 
 # ---------------------------------------------------------------------------
-# STEP 5 — settings.json hook injection
+# STEP 5 — Install memory-writer subagent
+# ---------------------------------------------------------------------------
+
+AGENTS_DIR="$HOME/.claude/agents"
+AGENT_SRC="$SCRIPT_DIR/agents/memory-writer.md"
+AGENT_DEST="$AGENTS_DIR/memory-writer.md"
+
+if [ ! -f "$AGENT_SRC" ]; then
+  echo "WARNING: agents/memory-writer.md not found in repo — skipping agent install."
+else
+  if [ ! -d "$AGENTS_DIR" ]; then
+    mkdir -p "$AGENTS_DIR"
+    if [ $? -ne 0 ]; then
+      echo "ERROR: Could not create directory: $AGENTS_DIR"
+      exit 1
+    fi
+  fi
+
+  if [ -f "$AGENT_DEST" ]; then
+    echo "Skipping (already exists): ~/.claude/agents/memory-writer.md"
+  else
+    cp "$AGENT_SRC" "$AGENT_DEST"
+    if [ $? -ne 0 ]; then
+      echo "ERROR: Could not copy memory-writer.md to $AGENT_DEST"
+      exit 1
+    fi
+    echo "Installed: ~/.claude/agents/memory-writer.md"
+  fi
+fi
+
+# ---------------------------------------------------------------------------
+# STEP 6 — settings.json hook injection
 # ---------------------------------------------------------------------------
 
 SETTINGS_FILE="$HOME/.claude/settings.json"
@@ -243,7 +274,7 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# STEP 6 — Post-install output
+# STEP 7 — Post-install output
 # ---------------------------------------------------------------------------
 
 echo ""

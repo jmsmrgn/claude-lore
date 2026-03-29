@@ -123,7 +123,7 @@ Creates the project folder with stub files ready to fill in. Pass an optional re
 
 ## How vault updates happen
 
-**During a session** — Claude uses MCPVault's `patch_note` tool to make surgical updates: appending a decision, changing a status line, updating next steps. This runs in an isolated subagent context so it doesn't pollute the main session's context window.
+**During a session** — Claude uses MCPVault's `patch_note` tool to make surgical updates: appending a decision, changing a status line, updating next steps. This runs via a dedicated memory-writer subagent in an isolated context window so vault I/O never pollutes the main session.
 
 **At compaction** — when Claude Code's context window fills and compacts (configurable, default ~50%), the checkpoint hook fires automatically. Claude updates `STATUS.md` and `DECISIONS.md` before compaction runs. Nothing is lost.
 
