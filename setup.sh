@@ -11,10 +11,13 @@ printf 'Where should the vault be installed? [default: ~/claude-lore]: '
 read -r input_path
 
 if [ -z "$input_path" ]; then
-  input_path="$HOME/claude-lore"
+  input_path="~/claude-lore"
 fi
 
-# Expand ~ to absolute path
+# Preserve the user-facing path (with ~ intact) for display purposes
+VAULT_DISPLAY="$input_path"
+
+# Expand ~ to absolute path for filesystem operations
 VAULT_DIR="${input_path/#\~/$HOME}"
 
 # ---------------------------------------------------------------------------
@@ -280,7 +283,7 @@ cat <<CLAUDEMD
 
 ## Vault & Project Context
 
-Vault is at $VAULT_DIR via MCPVault (obsidian MCP server).
+Vault is at $VAULT_DISPLAY via MCPVault (obsidian MCP server).
 
 Structure:
 
