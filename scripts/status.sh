@@ -44,7 +44,7 @@ fi
 # 3. SessionStart hook
 SESSION_HOOK_FOUND=0
 if [[ -f "$SETTINGS_FILE" ]] && command -v jq > /dev/null 2>&1; then
-  HOOK_CMD=$(jq -r '[.hooks.SessionStart[]? | .hooks[]? | select(.type == "command") | .command] | first // ""' "$SETTINGS_FILE" 2>/dev/null)
+  HOOK_CMD=$(jq -r '[.hooks.SessionStart[]? | .hooks[]? | select(.type == "command") | .command] | .[]' "$SETTINGS_FILE" 2>/dev/null)
   if echo "$HOOK_CMD" | grep -q "inject-context.sh"; then
     SESSION_HOOK_FOUND=1
   fi
@@ -59,7 +59,7 @@ fi
 # 4. Stop hook
 STOP_HOOK_FOUND=0
 if [[ -f "$SETTINGS_FILE" ]] && command -v jq > /dev/null 2>&1; then
-  STOP_CMD=$(jq -r '[.hooks.Stop[]? | .hooks[]? | select(.type == "command") | .command] | first // ""' "$SETTINGS_FILE" 2>/dev/null)
+  STOP_CMD=$(jq -r '[.hooks.Stop[]? | .hooks[]? | select(.type == "command") | .command] | .[]' "$SETTINGS_FILE" 2>/dev/null)
   if echo "$STOP_CMD" | grep -q "session-checkpoint.sh"; then
     STOP_HOOK_FOUND=1
   fi
