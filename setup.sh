@@ -35,28 +35,11 @@ if ! command -v jq > /dev/null 2>&1; then
   exit 1
 fi
 
-if ! command -v node > /dev/null 2>&1; then
+if ! command -v python3 > /dev/null 2>&1; then
   echo ""
-  echo "ERROR: node is required but not installed."
-  echo "Install it with: brew install node"
+  echo "ERROR: python3 is required but not installed."
+  echo "Install it with: brew install python3"
   exit 1
-fi
-
-# ---------------------------------------------------------------------------
-# --- mcpvault ---
-# ---------------------------------------------------------------------------
-
-if command -v mcpvault > /dev/null 2>&1; then
-  echo "mcpvault already installed — skipping."
-else
-  echo "Installing mcpvault globally via npm..."
-  npm install -g @bitbonsai/mcpvault
-  if [ $? -ne 0 ]; then
-    echo ""
-    echo "ERROR: mcpvault installation failed."
-    echo "Try running manually: npm install -g @bitbonsai/mcpvault"
-    exit 1
-  fi
 fi
 
 # ---------------------------------------------------------------------------
@@ -358,7 +341,7 @@ cat <<CLAUDEMD
 
 ## Vault & Project Context
 
-Vault is at $VAULT_DISPLAY via MCPVault (obsidian MCP server).
+Vault is at $VAULT_DISPLAY.
 
 Structure:
 
@@ -371,13 +354,15 @@ At the start of any project session: read Projects/{project}/STATUS.md and
 Global/CONTEXT.md unless already provided in context. Do not load CONTEXT.md
 or DECISIONS.md unless the task requires them.
 
+Vault writes happen automatically when a session ends. To write mid-session
+(capture a decision, update status), use the memory-writer agent or write
+directly to the vault files using Read/Edit/Write tools.
+
 At the end of any session, without being asked:
 
 1. List every decision made this session in one sentence each
 2. List every assumption validated or invalidated
-3. Patch STATUS.md with current state and next steps
-4. Patch DECISIONS.md with any new locked decisions
-5. Flag immediately if any session decision contradicts a locked prior decision
+3. Flag immediately if any session decision contradicts a locked prior decision
 
 Never re-suggest anything listed in any DECISIONS.md graveyard section.
 
