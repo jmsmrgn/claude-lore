@@ -7,11 +7,11 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # STEP 1 — Prompt for install path
 # ---------------------------------------------------------------------------
 
-printf 'Where should the vault be installed? [default: ~/claude-lore]: '
+printf 'Where should the vault be installed? [default: ~/claude-stow]: '
 read -r input_path
 
 if [ -z "$input_path" ]; then
-  input_path="~/claude-lore"
+  input_path="~/claude-stow"
 fi
 
 # Preserve the user-facing path (with ~ intact) for display purposes
@@ -22,7 +22,7 @@ VAULT_DIR="${input_path/#\~/$HOME}"
 
 # Write vault path to config so the session hook can find it
 mkdir -p "$HOME/.claude"
-echo "VAULT_DIR=$VAULT_DIR" > "$HOME/.claude/lore.conf"
+echo "VAULT_DIR=$VAULT_DIR" > "$HOME/.claude/stow.conf"
 
 # ---------------------------------------------------------------------------
 # STEP 2 — Dependency checks
@@ -51,7 +51,7 @@ SOURCE_VAULT="$SCRIPT_DIR/vault"
 if [ ! -d "$SOURCE_VAULT" ]; then
   echo ""
   echo "ERROR: Source vault directory not found at $SOURCE_VAULT"
-  echo "Ensure setup.sh is run from the claude-lore repo root or that vault/ exists alongside it."
+  echo "Ensure setup.sh is run from the claude-stow repo root or that vault/ exists alongside it."
   exit 1
 fi
 

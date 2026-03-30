@@ -7,9 +7,9 @@
 #
 # The subprocess uses native file tools (Read, Edit, Write, Bash) — no MCP required.
 # Skips sessions with fewer than 3 user turns to avoid noise from accidental opens.
-# Output from the subprocess is logged to ~/.claude/lore-checkpoint.log.
+# Output from the subprocess is logged to ~/.claude/stow-checkpoint.log.
 
-CONFIG_FILE="$HOME/.claude/lore.conf"
+CONFIG_FILE="$HOME/.claude/stow.conf"
 
 # Load vault config
 [[ ! -f "$CONFIG_FILE" ]] && exit 0
@@ -28,8 +28,8 @@ JSONL_FILE=$(ls -t "$PROJECTS_DIR"/*.jsonl 2>/dev/null | head -1)
 # Build vault update prompt via Python — handles all string interpolation and
 # escaping cleanly. Exits with no output if the session is too short to warrant
 # a vault write (< 3 user turns or no extractable content).
-PROMPT_FILE=$(mktemp /tmp/lore_prompt_XXXXXX.txt)
-LOG_FILE="$HOME/.claude/lore-checkpoint.log"
+PROMPT_FILE=$(mktemp /tmp/stow_prompt_XXXXXX.txt)
+LOG_FILE="$HOME/.claude/stow-checkpoint.log"
 
 python3 - "$JSONL_FILE" "$PROJECT_NAME" "$VAULT_DIR" << 'PYEOF' > "$PROMPT_FILE" 2>/dev/null
 import json, sys

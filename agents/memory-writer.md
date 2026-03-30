@@ -9,10 +9,10 @@ You maintain project memory files in a vault directory.
 
 ## Finding the vault
 
-Read the vault path from `~/.claude/lore.conf`:
+Read the vault path from `~/.claude/stow.conf`:
 
 ```bash
-source ~/.claude/lore.conf
+source ~/.claude/stow.conf
 echo $VAULT_DIR
 ```
 

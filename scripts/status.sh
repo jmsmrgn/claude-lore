@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
-# status.sh — post-install verification for claude-lore
+# status.sh — post-install verification for claude-stow
 # Run at any time to confirm the system is wired correctly.
 
-CONFIG_FILE="$HOME/.claude/lore.conf"
+CONFIG_FILE="$HOME/.claude/stow.conf"
 SETTINGS_FILE="$HOME/.claude/settings.json"
 AGENT_FILE="$HOME/.claude/agents/memory-writer.md"
 
-# Resolve vault path from lore.conf, fall back to ~/claude-lore
+# Resolve vault path from stow.conf, fall back to ~/claude-stow
 VAULT_DIR=""
 if [[ -f "$CONFIG_FILE" ]]; then
   # shellcheck source=/dev/null
   source "$CONFIG_FILE"
 fi
 if [[ -z "$VAULT_DIR" ]]; then
-  VAULT_DIR="$HOME/claude-lore"
+  VAULT_DIR="$HOME/claude-stow"
 fi
 
-echo "claude-lore status"
+echo "claude-stow status"
 echo "------------------"
 
 # 1. Vault directory
@@ -24,7 +24,7 @@ if [[ -d "$VAULT_DIR" ]]; then
   printf "%-16s%s [found]\n" "Vault:" "$VAULT_DIR"
 else
   printf "%-16s%s [NOT FOUND]\n" "Vault:" "$VAULT_DIR"
-  echo "  -> Run setup.sh to create the vault, or update VAULT_DIR in ~/.claude/lore.conf"
+  echo "  -> Run setup.sh to create the vault, or update VAULT_DIR in ~/.claude/stow.conf"
 fi
 
 # 2. Global/CONTEXT.md
@@ -99,7 +99,7 @@ else
 fi
 
 # 7. Checkpoint log (shows if subprocess has run)
-LOG_FILE="$HOME/.claude/lore-checkpoint.log"
+LOG_FILE="$HOME/.claude/stow-checkpoint.log"
 if [[ -f "$LOG_FILE" ]]; then
   log_size=$(wc -c < "$LOG_FILE" | tr -d ' ')
   printf "%-16s%s\n" "Checkpoint log:" "$LOG_FILE ($log_size bytes)"
