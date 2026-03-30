@@ -135,6 +135,7 @@ fi
 echo "$CURRENT_SIZE" > "$STATE_FILE"
 
 # Launch vault update as a background subprocess — silent, logs all output
+echo "=== $(date '+%Y-%m-%d %H:%M:%S') ===" >> "$LOG_FILE"
 claude -p "$(cat "$PROMPT_FILE")" \
   --tools "Read,Edit,Write,Bash" \
   --permission-mode bypassPermissions \
