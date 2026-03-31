@@ -135,6 +135,7 @@ fi
 SETTINGS_FILE="$HOME/.claude/settings.json"
 SETTINGS_DIR="$HOME/.claude"
 HOOK_COMMAND="$SCRIPT_DIR/hooks/inject-context.sh"
+STOP_HOOK_COMMAND="$SCRIPT_DIR/hooks/session-checkpoint.sh"
 HOOK_STATUS=""
 
 if [ ! -f "$SETTINGS_FILE" ] || [ ! -s "$SETTINGS_FILE" ]; then
@@ -161,19 +162,26 @@ if [ ! -f "$SETTINGS_FILE" ] || [ ! -s "$SETTINGS_FILE" ]; then
 else
   # File exists and has content — validate JSON first
   if ! jq empty "$SETTINGS_FILE" > /dev/null 2>&1; then
-    # Case 6: invalid JSON
+    # Case 6: invalid JSON — print both hooks together so the user can merge in one operation
     echo ""
     echo "WARNING: $SETTINGS_FILE contains invalid JSON. Not modifying."
-    echo "Merge the following into $SETTINGS_FILE manually:"
+    echo "Merge the following hooks block into $SETTINGS_FILE manually:"
     echo ""
     jq -n \
-      --arg cmd "$HOOK_COMMAND" \
+      --arg session_cmd "$HOOK_COMMAND" \
+      --arg stop_cmd "$STOP_HOOK_COMMAND" \
       '{
         hooks: {
           SessionStart: [
             {
               matcher: "",
-              hooks: [{ type: "command", command: $cmd }]
+              hooks: [{ type: "command", command: $session_cmd }]
+            }
+          ],
+          Stop: [
+            {
+              matcher: "",
+              hooks: [{ type: "command", command: $stop_cmd }]
             }
           ]
         }
@@ -263,7 +271,6 @@ fi
 # STEP 6b — Stop hook injection (session-checkpoint.sh)
 # ---------------------------------------------------------------------------
 
-STOP_HOOK_COMMAND="$SCRIPT_DIR/hooks/session-checkpoint.sh"
 STOP_HOOK_STATUS=""
 
 if [ "$HOOK_STATUS" = "manual merge required" ]; then
