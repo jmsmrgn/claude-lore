@@ -30,7 +30,7 @@ Three pieces work together:
 
 **The session hook** — a small script that runs at the start of every Claude Code session. It reads your vault and injects the right context automatically. You don't think about it.
 
-**The checkpoint hook** — runs when a session ends (Stop event). It reads the session JSONL, extracts the conversation, and launches a background `claude -p` subprocess to update STATUS.md and DECISIONS.md automatically. No user action required. Output is logged to `~/.claude/stow-checkpoint.log`.
+**The checkpoint hook** — runs when a session ends (Stop event). It reads the session JSONL, extracts the conversation, runs Haiku to produce a structured summary (with no file access), then writes to STATUS.md and DECISIONS.md via a deterministic Python step. No user action required. Output is logged to `~/.claude/stow-checkpoint.log`.
 
 No database. No running processes. No port 37777.
 
@@ -101,6 +101,8 @@ A common mistake is putting stack conventions (package manager, git rules, infra
 
 `Global/CONTEXT.md` and `STATUS.md` load every session. `CONTEXT.md` and `DECISIONS.md` load only when the task requires them, keeping the active context window lean.
 
+> **Name collision:** if two of your repos share the same directory name (e.g. two separate `app/` directories), both would write to the same vault folder. Fix it by adding a `PROJECT_NAME=unique-name` line to a `.stow` file in the repo root — the hooks use that value instead of the directory name.
+
 ---
 
 ## Adding a new project
@@ -125,7 +127,7 @@ Either way, `STATUS.md` is the highest priority to fill in — it loads every se
 
 ## How vault updates happen
 
-**Automatically on session close** — the checkpoint hook fires when the session ends, extracts the conversation from the session JSONL, and launches a Haiku subprocess that reads the transcript and updates STATUS.md and DECISIONS.md. This runs in the background — you don't wait for it. Check `~/.claude/stow-checkpoint.log` to see what was written.
+**Automatically on session close** — the checkpoint hook fires when the session ends, extracts the conversation from the session JSONL, runs Haiku to summarise it into structured text (with no file access), then writes deterministically to STATUS.md and DECISIONS.md via Python. You don't wait for it. Check `~/.claude/stow-checkpoint.log` to see what was written.
 
 Sessions with fewer than 3 user turns are skipped (accidental opens, quick lookups).
 
