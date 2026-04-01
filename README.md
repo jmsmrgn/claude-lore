@@ -127,7 +127,7 @@ Either way, `STATUS.md` is the highest priority to fill in — it loads every se
 
 ## How vault updates happen
 
-**Automatically on session close** — the checkpoint hook fires when the session ends, extracts the conversation from the session JSONL, runs Haiku to summarise it into structured text (with no file access), then writes deterministically to STATUS.md and DECISIONS.md via Python. You don't wait for it. Check `~/.claude/stow-checkpoint.log` to see what was written.
+**Automatically on session close** — the checkpoint hook fires when the session ends, extracts the conversation from the session JSONL, runs Haiku to summarise it into structured text (with no file access), then writes deterministically to STATUS.md and DECISIONS.md via Python. You don't wait for it. Check `~/.claude/stow-checkpoint.log` to see what was written. Custom sections you've added to STATUS.md outside the three managed ones (`Current state`, `Last session`, `Next steps`) are preserved.
 
 Sessions with fewer than 3 user turns are skipped (accidental opens, quick lookups).
 
